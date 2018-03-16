@@ -12,6 +12,7 @@ _start:
     mov rcx, 3
 
 .loop:
+    ; dec counter
     dec rcx
 
     ; prepare write
@@ -21,11 +22,11 @@ _start:
     mov rdx, 14
 
     ; write
-    push rcx
+    push rcx ; save for protecting counter from overwrite by syscall
     syscall
-    pop rcx
+    pop rcx ; load counter
 
-    ; jump if zero
+    ; jump if counter is not zero
     test rcx, rcx
     jnz .loop
 
